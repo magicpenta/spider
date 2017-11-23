@@ -7,7 +7,7 @@ import javax.jms.*;
 /**
  * Demo class
  *
- * @author xiepd
+ * @author panda
  * @date 2017/10/28
  */
 public class ActivemqProducer {

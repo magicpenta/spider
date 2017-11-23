@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * 通用工具类
  *
- * @author xiepd
+ * @author panda
  * @date 2017/10/28
  */
 public class CommonUtil {

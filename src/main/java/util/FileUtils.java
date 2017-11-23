@@ -8,7 +8,7 @@ import java.io.*;
 /**
  * File工具类
  *
- * @author xiepd
+ * @author panda
  * @date 2017/10/28
  */
 public class FileUtils {

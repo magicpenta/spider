@@ -9,7 +9,7 @@ import service.ParseService;
 /**
  * 应用入口
  *
- * @author xiepd
+ * @author panda
  * @date 2017/10/28
  */
 public class SpiderApplication {
@@ -20,7 +20,6 @@ public class SpiderApplication {
 
         Task task = new Task();
         task.setUrl("http://news.xinhuanet.com/world/2017-11/12/c_1121941191.htm");
-        task.setCharset("UTF-8");
 
         String responseBody = downloadService.getResponseBody(task);
         if (responseBody != null) {

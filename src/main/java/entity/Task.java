@@ -10,8 +10,6 @@ public class Task {
 
     private String url;
 
-    private String charset;
-
     public String getUrl() {
         return url;
     }
@@ -20,11 +18,4 @@ public class Task {
         this.url = url;
     }
 
-    public String getCharset() {
-        return charset;
-    }
-
-    public void setCharset(String charset) {
-        this.charset = charset;
-    }
 }
