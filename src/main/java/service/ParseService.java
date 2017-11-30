@@ -3,7 +3,7 @@ package service;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.CommonUtil;
+import util.HtmlUtil;
 
 /**
  * 解析服务
@@ -18,7 +18,7 @@ public class ParseService {
     public void parse(String body) {
         logger.info("开始解析页面");
 
-        Document doc = CommonUtil.getDocument(body);
+        Document doc = HtmlUtil.getDocument(body);
 
         try {
             String title = doc.getElementsByClass("h-title").text();
