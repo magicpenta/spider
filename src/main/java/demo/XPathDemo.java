@@ -1,4 +1,4 @@
-package main;
+package demo;
 
 import org.apache.xpath.XPathAPI;
 import org.cyberneko.html.parsers.DOMParser;
