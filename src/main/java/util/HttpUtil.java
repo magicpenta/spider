@@ -37,6 +37,10 @@ public class HttpUtil {
     private static final Logger logger = LoggerFactory.getLogger(HttpUtil.class);
 
     public static String executeGetRequest(String url) {
+        if (url == null || "".equals(url)) {
+            logger.warn("url不能为空！");
+            return null;
+        }
         HttpParams httpParams = new HttpParams();
         httpParams.setUrl(url);
         return executeGetRequest(httpParams);
