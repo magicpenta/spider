@@ -9,6 +9,7 @@ import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.CommonUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +18,13 @@ import java.util.List;
  * 链接提取器
  *
  * @author panda
- * @date 2017/10/28
+ * @date 2017/11/28
  */
 public class LinkExtractor {
 
     private static final Logger logger = LoggerFactory.getLogger(LinkExtractor.class);
 
-    public static List<String> extractLinks(String body, LinkFilter filter) {
+    public static List<String> extractLinks(String url, String body, LinkFilter filter) {
 
         List<String> linkList = new ArrayList<String>();
 
@@ -56,6 +57,11 @@ public class LinkExtractor {
                     linkUrl = frame.getFrameLocation();
                 }
 
+                // 获取绝对路径
+                if (linkUrl != null) {
+                    linkUrl = CommonUtil.getAbsoluteUrl(url, linkUrl);
+                }
+
                 // 如果有自定义过滤器，则增加自定义过滤条件
                 if (filter != null && linkUrl != null) {
                     if (!filter.accept(linkUrl)) {
@@ -63,7 +69,7 @@ public class LinkExtractor {
                     }
                 }
 
-                if (linkUrl == null || "".equals(linkUrl) || "#".equals(linkUrl) || linkUrl.startsWith("javascript")) {
+                if (linkUrl == null || "".equals(linkUrl) || linkUrl.startsWith("#") || linkUrl.startsWith("javascript")) {
                     continue;
                 }
 

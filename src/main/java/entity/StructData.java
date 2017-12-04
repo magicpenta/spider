@@ -3,7 +3,7 @@ package entity;
 import java.util.Date;
 
 /**
- * Demo class
+ * 结构化数据
  *
  * @author xiepd
  * @date 2017/10/28
@@ -13,6 +13,8 @@ public class StructData {
     private Long userId;
 
     private String userName;
+
+    private String title;
 
     private Date publishTime;
 
@@ -32,6 +34,14 @@ public class StructData {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Date getPublishTime() {

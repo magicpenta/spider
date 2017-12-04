@@ -14,8 +14,9 @@ public class LinkExtractorTest {
 
     @Test
     public void testExtractLinksWithoutFilter() {
-        String body = HttpUtil.executeGetRequest("http://sm.xmu.edu.cn/");
-        List<String> linkList = LinkExtractor.extractLinks(body, null);
+        String url = "http://www.importnew.com/";
+        String body = HttpUtil.executeGetRequest(url);
+        List<String> linkList = LinkExtractor.extractLinks(url, body, null);
         for (int i = 0; i < linkList.size(); i++) {
             System.out.println("linkUrl:" + linkList.get(i));
         }
@@ -23,13 +24,14 @@ public class LinkExtractorTest {
 
     @Test
     public void testExtractLinksWithFilter() {
-        String body = HttpUtil.executeGetRequest("http://sm.xmu.edu.cn/");
+        String url = "http://sm.xmu.edu.cn/";
+        String body = HttpUtil.executeGetRequest(url);
         LinkFilter filter = new LinkFilter() {
             public boolean accept(String link) {
-                return link.contains("sm.xmu.edu.cn");
+                return link.contains("http://sm.xmu.edu.cn/");
             }
         };
-        List<String> linkList = LinkExtractor.extractLinks(body, filter);
+        List<String> linkList = LinkExtractor.extractLinks(url, body, filter);
         for (int i = 0; i < linkList.size(); i++) {
             System.out.println("linkUrl:" + linkList.get(i));
         }

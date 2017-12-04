@@ -50,7 +50,6 @@ public class PluginFactory {
     private void scanPackage(String packageName) {
         try {
             String path = getSrcPath() + File.separator + changePackageNameToPath(packageName);
-            logger.info(path);
             File dir = new File(path);
             File[] files = dir.listFiles();
 
@@ -134,6 +133,7 @@ public class PluginFactory {
         }
 
         try {
+            logger.info("找到解析插件：" + pluginClass);
             Class clazz = Class.forName(pluginClass);
             Constructor constructor = clazz.getConstructor(Task.class);
             object = constructor.newInstance(task);
