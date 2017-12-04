@@ -19,10 +19,14 @@ public class SpiderApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(SpiderApplication.class);
 
-    // URL 队列
+    /**
+     * URL 队列
+     */
     private static Queue<String> urlQueue = new LinkedList<String>();
 
-    // URL 排重
+    /**
+     * URL 排重
+     */
     private static Map<Long, Integer> urlPool = new HashMap<Long, Integer>();
 
 
