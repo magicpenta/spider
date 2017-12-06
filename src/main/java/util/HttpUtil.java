@@ -194,9 +194,9 @@ public class HttpUtil {
     private static RequestConfig initRequestConfig(HttpParams httpParams) {
 
         RequestConfig requestConfig = RequestConfig.custom()
-                .setConnectionRequestTimeout(2000)
-                .setConnectTimeout(2000)
-                .setSocketTimeout(2000)
+                .setConnectionRequestTimeout(5000)
+                .setConnectTimeout(5000)
+                .setSocketTimeout(5000)
                 .build();
 
         if (httpParams == null) {

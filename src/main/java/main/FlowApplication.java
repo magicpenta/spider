@@ -1,6 +1,7 @@
 package main;
 
 import api.WuyouApi;
+import api.XdailiApi;
 import entity.HttpParams;
 import entity.Proxy;
 import factory.ProxyFactory;
@@ -28,9 +29,13 @@ public class FlowApplication {
             logger.info("开始第 {} 轮访问...", i + 1);
 
             try {
-                WuyouApi.requestProxyList();
+//                WuyouApi.requestProxyList();
 
-                String targetUrl = "http://blog.csdn.net/magicpenta/article/details/78701646";
+                if (ProxyFactory.isProxyEmpty()) {
+                    XdailiApi.requestProxyList();
+                }
+
+                String targetUrl = "http://blog.csdn.net/magicpenta/article/details/78702046";
 
                 Proxy proxy = ProxyFactory.getProxy();
 
@@ -47,7 +52,7 @@ public class FlowApplication {
                     logger.info("失败次数：" + failureCount);
                 }
 
-                Thread.sleep(5000);
+//                Thread.sleep(5000);
             } catch (Exception e) {
                 continue;
             }
