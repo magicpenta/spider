@@ -35,7 +35,7 @@ public class FlowApplication {
                     XdailiApi.requestProxyList();
                 }
 
-                String targetUrl = "http://blog.csdn.net/magicpenta/article/details/78702046";
+                String targetUrl = "";
 
                 Proxy proxy = ProxyFactory.getProxy();
 
