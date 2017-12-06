@@ -41,8 +41,9 @@ public class HttpUtil {
             logger.warn("url不能为空！");
             return null;
         }
-        HttpParams httpParams = new HttpParams();
-        httpParams.setUrl(url);
+        HttpParams httpParams = HttpParams.getBuilder()
+                .setUrl(url)
+                .build();
         return executeGetRequest(httpParams);
     }
 
@@ -192,7 +193,11 @@ public class HttpUtil {
 
     private static RequestConfig initRequestConfig(HttpParams httpParams) {
 
-        RequestConfig requestConfig = RequestConfig.DEFAULT;
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectionRequestTimeout(2000)
+                .setConnectTimeout(2000)
+                .setSocketTimeout(2000)
+                .build();
 
         if (httpParams == null) {
             return requestConfig;
@@ -204,7 +209,7 @@ public class HttpUtil {
 
             if (proxyIp != null && proxyPort != null) {
                 HttpHost proxy = new HttpHost(proxyIp, proxyPort);
-                requestConfig = RequestConfig.custom()
+                requestConfig = RequestConfig.copy(requestConfig)
                         .setProxy(proxy)
                         .build();
             }
