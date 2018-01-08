@@ -2,7 +2,6 @@ package filter;
 
 import org.junit.Test;
 import service.DownloadService;
-import util.HttpUtil;
 import java.util.List;
 
 /**

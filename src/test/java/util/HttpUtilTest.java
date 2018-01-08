@@ -2,9 +2,6 @@ package util;
 
 import entity.HttpParams;
 import entity.Proxy;
-import org.apache.http.Header;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.message.BasicHeader;
 import org.junit.Test;
 
 import java.util.HashMap;
