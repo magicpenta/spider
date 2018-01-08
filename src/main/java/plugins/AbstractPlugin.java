@@ -26,8 +26,6 @@ public abstract class AbstractPlugin extends Thread {
 
     protected Task task;
 
-    protected DownloadService downloadService = new DownloadService();
-
     private List<String> urlList = new ArrayList<String>();
 
     public AbstractPlugin(Task task) {
@@ -37,7 +35,7 @@ public abstract class AbstractPlugin extends Thread {
     @Override
     public void run() {
         logger.info("{} 开始运行...", task.getUrl());
-        String body = downloadService.getResponseBody(task);
+        String body = DownloadService.getResponseBody(task);
         if (StringUtils.isNotEmpty(body)) {
             if (isDetailPage(task.getUrl())) {
                 logger.info("开始解析详情页...");
@@ -54,6 +52,7 @@ public abstract class AbstractPlugin extends Thread {
         LinkFilter hostFilter = new LinkFilter() {
             String urlHost = CommonUtil.getUrlPrefix(task.getUrl());
 
+            @Override
             public boolean accept(String link) {
                 return link.contains(urlHost);
             }

@@ -4,6 +4,7 @@ import entity.Proxy;
 import factory.ProxyFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import service.DownloadService;
 import util.HttpUtil;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class XdailiApi {
 
     public static void requestProxyList() {
 
-        String responseBody = HttpUtil.executeGetRequest(API_URL);
+        String responseBody = DownloadService.getResponseBody(API_URL);
 
         if (StringUtils.isEmpty(responseBody)) {
             logger.error("请求讯代理失败！");

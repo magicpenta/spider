@@ -34,7 +34,7 @@ public class SpiderApplication {
 
         // 实例化任务对象
         Task task = Task.getBuilder()
-                .setUrl("http://sm.xmu.edu.cn/")
+                .setUrl("https://www.zhihu.com/api/v4/members/zhi-neng-wan-ka/activities?limit=10&after_id=1514210844&desktop=True")
                 .build();
 
         // 初始化 URL 队列
@@ -63,6 +63,7 @@ public class SpiderApplication {
 
                 Thread.sleep(300);
             } catch (Exception e) {
+                logger.error("出现异常:", e);
                 continue;
             }
         }

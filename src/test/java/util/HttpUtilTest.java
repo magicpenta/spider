@@ -20,7 +20,10 @@ public class HttpUtilTest {
 
     @Test
     public void testExecuteGetRequest() {
-        String responseBody = HttpUtil.executeGetRequest("http://www.baidu.com");
+        HttpParams httpParams = HttpParams.getBuilder()
+                .setUrl("http://www.baidu.com")
+                .build();
+        String responseBody = HttpUtil.executeGetRequest(httpParams);
         assert responseBody != null;
         System.out.println(responseBody);
     }

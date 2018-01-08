@@ -36,17 +36,6 @@ public class HttpUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(HttpUtil.class);
 
-    public static String executeGetRequest(String url) {
-        if (url == null || "".equals(url)) {
-            logger.warn("url不能为空！");
-            return null;
-        }
-        HttpParams httpParams = HttpParams.getBuilder()
-                .setUrl(url)
-                .build();
-        return executeGetRequest(httpParams);
-    }
-
     public static String executeGetRequest(HttpParams httpParams) {
 
         // 创建 HttpClient 对象
