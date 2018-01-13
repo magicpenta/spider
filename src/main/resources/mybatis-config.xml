@@ -16,5 +16,6 @@
     </environments>
     <mappers>
         <mapper resource="dao/webConfigMapper.xml"/>
+        <mapper resource="dao/taskMapper.xml"/>
     </mappers>
 </configuration>

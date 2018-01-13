@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * 结构化数据
  *
- * @author xiepd
+ * @author panda
  * @date 2017/10/28
  */
 public class StructData {
