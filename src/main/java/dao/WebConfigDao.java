@@ -10,10 +10,6 @@ import entity.WebConfig;
  */
 public class WebConfigDao {
 
-    public static WebConfig selectOneById(int id) {
-        return BaseDao.selectOne("dao.WebConfigMapper.selectOneById", id);
-    }
-
     public static WebConfig selectOneByDomain(String domain) {
         return BaseDao.selectOne("dao.WebConfigMapper.selectOneByDomain", domain);
     }

@@ -2,9 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dao.WebConfigMapper">
-    <select id="selectOneById" parameterType="int" resultMap="BaseResultMap">
-        select * from web_config where id = #{id}
-    </select>
 
     <select id="selectOneByDomain" parameterType="java.lang.String" resultMap="BaseResultMap">
         select * from web_config where domain = #{domain}
@@ -21,4 +18,5 @@
         <result column="need_proxy" property="needProxy" jdbcType="VARCHAR"/>
         <result column="request_headers" property="requestHeaders" jdbcType="LONGVARCHAR"/>
     </resultMap>
+
 </mapper>

@@ -20,8 +20,4 @@ public class TaskDao {
         return BaseDao.selectList("dao.TaskMapper.selectListByStatus", status);
     }
 
-    public static void main(String[] args) {
-        Task task = TaskDao.selectOneById(1);
-        System.out.println(task.getUrl());
-    }
 }

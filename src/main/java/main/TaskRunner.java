@@ -6,18 +6,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import plugins.AbstractPlugin;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 import java.util.zip.CRC32;
 
 /**
- * 应用入口
+ * 任务执行线程
  *
  * @author panda
- * @date 2017/10/28
+ * @date 2018/1/14
  */
-public class SpiderApplication {
+public class TaskRunner extends Thread {
 
-    private static final Logger logger = LoggerFactory.getLogger(SpiderApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(TaskRunner.class);
+
+    private Task task;
 
     /**
      * URL 队列
@@ -29,13 +34,13 @@ public class SpiderApplication {
      */
     private static Map<Long, Integer> urlPool = new HashMap<Long, Integer>();
 
+    public TaskRunner(Task task) {
+        this.task = task;
+    }
 
-    public static void main(String[] args) {
-
-        // 实例化任务对象
-        Task task = Task.getBuilder()
-                .setUrl("https://www.zhihu.com/api/v4/members/zhi-neng-wan-ka/activities?limit=10&after_id=1514210844&desktop=True")
-                .build();
+    @Override
+    public void run() {
+        logger.info("任务线程开始执行...");
 
         // 初始化 URL 队列
         urlQueue.add(task.getUrl());
@@ -67,7 +72,6 @@ public class SpiderApplication {
                 continue;
             }
         }
-
     }
 
     /**

@@ -144,12 +144,4 @@ public class PluginFactory {
         return (AbstractPlugin) object;
     }
 
-    public static void main(String[] args) {
-        PluginFactory factory = PluginFactory.getInstance();
-        Task task = Task.getBuilder()
-                .setUrl("http://sm.xmu.edu.cn/html/intl/")
-                .build();
-        factory.getPlugin(task);
-    }
-
 }

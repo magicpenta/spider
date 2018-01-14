@@ -14,16 +14,6 @@ public class Task {
 
     private Integer status;
 
-    public static TaskBuilder getBuilder() {
-        return new TaskBuilder();
-    }
-
-    private Task(Integer id, String url, Integer status) {
-        this.id = id;
-        this.url = url;
-        this.status = status;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -46,28 +36,6 @@ public class Task {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public static class TaskBuilder {
-
-        private Integer id;
-        private String url;
-        private Integer status;
-
-        public Task build() {
-            return new Task(id, url, status);
-        }
-
-        public TaskBuilder setUrl(String url) {
-            this.url = url;
-            return this;
-        }
-
-        public TaskBuilder setStatus(Integer status) {
-            this.status = status;
-            return this;
-        }
-
     }
 
 }
