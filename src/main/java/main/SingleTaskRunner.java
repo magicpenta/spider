@@ -2,6 +2,7 @@ package main;
 
 import com.google.gson.Gson;
 import entity.Task;
+import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,24 +24,24 @@ public class SingleTaskRunner extends Thread {
 
         logger.info("任务进程开始执行...");
 
-        Properties prop = new Properties();
-        try {
-            prop.load(SingleTaskRunner.class.getClassLoader().getResourceAsStream("log4j.properties"));
-            prop.setProperty("log4j.appender.file.File", "log/xixi.log");
-        } catch (IOException e) {
-            logger.error("加载日志文件异常:", e);
-        }
-
         if (args.length == 0) {
             logger.error("获取进程参数失败，退出进程！");
             System.exit(0);
         }
 
         String json = new String(Base64.getDecoder().decode(args[0]));
-        logger.info(json);
 
-        // 实例化任务对象
         Task task = new Gson().fromJson(json, Task.class);
+
+        Properties prop = new Properties();
+        try {
+            // 重新加载日志配置文件
+            prop.load(SingleTaskRunner.class.getClassLoader().getResourceAsStream("log4j.properties"));
+            prop.setProperty("log4j.appender.file.File", "log/task_" + task.getId() + ".log");
+            PropertyConfigurator.configure(prop);
+        } catch (IOException e) {
+            logger.error("加载日志文件异常:", e);
+        }
 
         new TaskRunner(task).start();
 
