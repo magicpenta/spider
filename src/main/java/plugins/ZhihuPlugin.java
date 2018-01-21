@@ -25,7 +25,7 @@ public class ZhihuPlugin extends AbstractPlugin {
     public void parseContent(String body) {
         logger.info("开始解析数据...");
         try {
-            Document document = Document.parse("[");
+            Document document = Document.parse(body);
             MongoUtil.insertOne(document);
         } catch (Exception e) {
             logger.error("保存数据异常:", e);
