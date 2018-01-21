@@ -1,9 +1,10 @@
 package plugins;
 
 import entity.Task;
-import org.apache.commons.lang3.StringUtils;
+import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.MongoUtil;
 
 /**
  * spider
@@ -22,7 +23,14 @@ public class ZhihuPlugin extends AbstractPlugin {
 
     @Override
     public void parseContent(String body) {
-        logger.info(body);
+        logger.info("开始解析数据...");
+        try {
+            Document document = Document.parse("[");
+            MongoUtil.insertOne(document);
+        } catch (Exception e) {
+            logger.error("保存数据异常:", e);
+        }
+        logger.info("解析任务完成...");
     }
 
     @Override

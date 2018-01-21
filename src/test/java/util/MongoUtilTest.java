@@ -1,7 +1,5 @@
 package util;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.junit.Test;
 
@@ -15,10 +13,9 @@ public class MongoUtilTest {
 
     @Test
     public void testInsertOne() {
-        MongoCollection<Document> mongoCollection = MongoUtil.getCollection("col");
         Document document = new Document("name", "panda");
-        mongoCollection.insertOne(document);
-        document = mongoCollection.find(Filters.eq("name", "panda")).first();
+        MongoUtil.insertOne(document);
+        document = MongoUtil.findFirst("name", "panda");
         assert document != null;
         assert document.getString("name").equals("panda");
     }
