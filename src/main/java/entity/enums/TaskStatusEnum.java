@@ -9,7 +9,8 @@ package entity.enums;
 public enum TaskStatusEnum {
 
     NOT_RUNNING(0),
-    RUNNED(1);
+    RUNNING(1),
+    RUNNED(2);
 
     private int value;
 

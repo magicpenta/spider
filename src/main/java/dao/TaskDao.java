@@ -20,4 +20,12 @@ public class TaskDao {
         return BaseDao.selectList("dao.TaskMapper.selectListByStatus", status);
     }
 
+    public static int insertList(List<Task> taskList) {
+        return BaseDao.insert("dao.TaskMapper.insertList", taskList);
+    }
+
+    public static int updateStatus(Task task) {
+        return BaseDao.update("dao.TaskMapper.updateStatus", task);
+    }
+
 }

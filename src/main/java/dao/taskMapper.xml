@@ -11,6 +11,22 @@
         select * from task where status = #{status} order by id asc
     </select>
 
+    <insert id="insertList" parameterType="java.util.List">
+        insert into task
+        (url, status)
+        values
+        <foreach collection="list" item="item" index="index" open="" close="" separator=",">
+            (#{item.url}, #{item.status})
+        </foreach>
+    </insert>
+
+    <update id="updateStatus" parameterType="entity.Task">
+        update task
+          set
+            status = #{status}
+        where id = #{id}
+    </update>
+
     <sql id="Base_Column_List">
         id, url, status
     </sql>

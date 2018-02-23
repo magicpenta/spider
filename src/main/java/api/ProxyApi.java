@@ -1,7 +1,8 @@
 package api;
 
+import config.Constants;
+import dao.ProxyDao;
 import entity.Proxy;
-import factory.ProxyFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import service.DownloadService;
@@ -10,31 +11,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * spider
+ * 代理 api
  *
  * @author panda
- * @date 2017/12/6
+ * @date 2017/12/06
  */
-public class XdailiApi {
+public class ProxyApi {
 
-    private static final Logger logger = Logger.getLogger(XdailiApi.class);
-
-    private static final String API_URL = "http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=7241b3292cad49568a2f24783f881410&orderno=YZ20171266537pxvwQo&returnType=1&count=20";
+    private static final Logger logger = Logger.getLogger(ProxyApi.class);
 
     public static void requestProxyList() {
 
-        String responseBody = DownloadService.getResponseBody(API_URL);
+        String responseBody = DownloadService.getInstance().getResponseBody(Constants.PROXY_URL);
 
         if (StringUtils.isEmpty(responseBody)) {
-            logger.error("请求讯代理失败！");
+            logger.error("请求代理api失败！");
             return;
         }
 
         try {
             List<Proxy> proxyList = new ArrayList<Proxy>();
-            String[] proxyArray = responseBody.split("\r\n");
+            String[] proxyArray = responseBody.split("\n");
 
-            for (int i = 0; i < proxyArray.length; i++) {
+            // 对比代理限制数与请求到的代理数，取最小值
+            int count = Constants.PROXY_QUANTITY >= proxyArray.length ? proxyArray.length : Constants.PROXY_QUANTITY;
+
+            for (int i = 0; i < count; i++) {
                 String[] proxyStr = proxyArray[i].split(":");
                 String proxyIp = proxyStr[0];
                 Integer proxyPort = Integer.valueOf(proxyStr[1]);
@@ -43,6 +45,7 @@ public class XdailiApi {
                 logger.info("获取代理port: " + proxyPort);
 
                 Proxy proxy = new Proxy();
+                proxy.setId(i + 1);
                 proxy.setProxyIp(proxyIp);
                 proxy.setProxyPort(proxyPort);
                 proxy.setProxyUserName("");
@@ -51,11 +54,12 @@ public class XdailiApi {
                 proxyList.add(proxy);
             }
 
-            ProxyFactory.addProxy(proxyList);
+            ProxyDao.insertList(proxyList);
 
         } catch (Exception e) {
-            logger.error("请求讯代理 API 失败:", e);
+            logger.error("请求代理api失败:", e);
         }
 
     }
+
 }

@@ -17,5 +17,7 @@
     <mappers>
         <mapper resource="dao/webConfigMapper.xml"/>
         <mapper resource="dao/taskMapper.xml"/>
+        <mapper resource="dao/proxyMapper.xml"/>
+        <mapper resource="dao/userIdMapper.xml"/>
     </mappers>
 </configuration>

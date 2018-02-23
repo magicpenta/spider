@@ -8,6 +8,8 @@ package entity;
  */
 public class Proxy {
 
+    private Integer id;
+
     private String proxyIp;
 
     private Integer proxyPort;
@@ -15,6 +17,14 @@ public class Proxy {
     private String proxyUserName;
 
     private String proxyPassword;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getProxyIp() {
         return proxyIp;

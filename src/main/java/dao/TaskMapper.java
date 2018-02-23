@@ -16,4 +16,8 @@ public interface TaskMapper {
 
     List<Task> selectListByStatus(int status);
 
+    int insertList(List<Task> taskList);
+
+    int updateStatus(Task task);
+
 }

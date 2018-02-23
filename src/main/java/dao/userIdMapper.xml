@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.UserIdMapper">
+
+    <select id="selectMaxId" resultType="java.lang.Integer">
+        select MAX(id) from user_id
+    </select>
+
+    <select id="selectList" parameterType="int" resultMap="BaseResultMap">
+        select * from user_id where id > #{id} limit 10000
+    </select>
+
+    <sql id="Base_Column_List">
+        id, user_id
+    </sql>
+
+    <resultMap id="BaseResultMap" type="entity.UserId">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+</mapper>

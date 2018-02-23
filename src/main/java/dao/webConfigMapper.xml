@@ -3,8 +3,8 @@
 
 <mapper namespace="dao.WebConfigMapper">
 
-    <select id="selectOneByDomain" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select * from web_config where domain = #{domain}
+    <select id="selectList" parameterType="int" resultMap="BaseResultMap">
+        select * from web_config
     </select>
 
     <sql id="Base_Column_List">

@@ -43,7 +43,7 @@ public class FileUtils {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    // ignore
                 }
             }
         }

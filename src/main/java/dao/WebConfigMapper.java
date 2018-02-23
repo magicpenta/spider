@@ -2,6 +2,8 @@ package dao;
 
 import entity.WebConfig;
 
+import java.util.List;
+
 /**
  * 网站配置 mapper 接口
  *
@@ -10,8 +12,6 @@ import entity.WebConfig;
  */
 public interface WebConfigMapper {
 
-    WebConfig selectOneById(int id);
-
-    WebConfig selectOneByDomain(String domain);
+    List<WebConfig> selectList();
 
 }

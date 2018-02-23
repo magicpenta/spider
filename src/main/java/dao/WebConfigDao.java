@@ -1,6 +1,7 @@
 package dao;
 
 import entity.WebConfig;
+import java.util.List;
 
 /**
  * 网站配置 dao 接口
@@ -10,8 +11,8 @@ import entity.WebConfig;
  */
 public class WebConfigDao {
 
-    public static WebConfig selectOneByDomain(String domain) {
-        return BaseDao.selectOne("dao.WebConfigMapper.selectOneByDomain", domain);
+    public static List<WebConfig> selectList() {
+        return BaseDao.selectList("dao.WebConfigMapper.selectList", null);
     }
 
 }

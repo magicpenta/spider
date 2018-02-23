@@ -46,11 +46,12 @@ public class MultipleTaskRunner {
             }
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1000000);
             } catch (InterruptedException e) {
                 logger.error("线程休眠异常:", e);
             }
         }
+
     }
 
 }

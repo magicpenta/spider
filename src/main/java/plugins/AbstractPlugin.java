@@ -26,7 +26,7 @@ public abstract class AbstractPlugin extends Thread {
 
     protected Task task;
 
-    private List<String> urlList = new ArrayList<String>();
+    protected List<String> urlList = new ArrayList<String>();
 
     public AbstractPlugin(Task task) {
         this.task = task;
@@ -35,7 +35,7 @@ public abstract class AbstractPlugin extends Thread {
     @Override
     public void run() {
         logger.info("{} 开始运行...", task.getUrl());
-        String body = DownloadService.getResponseBody(task);
+        String body = DownloadService.getInstance().getResponseBody(task);
         if (StringUtils.isNotEmpty(body)) {
             if (isDetailPage(task.getUrl())) {
                 logger.info("开始解析详情页...");

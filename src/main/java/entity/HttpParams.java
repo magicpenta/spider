@@ -16,10 +16,6 @@ public class HttpParams {
 
     private String charset;
 
-    private Boolean needCookie;
-
-    private Boolean needProxy;
-
     private Proxy proxy;
 
     private RequestConfig requestConfig;
@@ -36,8 +32,6 @@ public class HttpParams {
                       RequestConfig requestConfig, Map<String, String> headerMap, Map<String, String> formParams) {
         this.url = url;
         this.charset = charset;
-        this.needCookie = needCookie;
-        this.needProxy = needProxy;
         this.proxy = proxy;
         this.requestConfig = requestConfig;
         this.headerMap = headerMap;
@@ -58,22 +52,6 @@ public class HttpParams {
 
     public void setCharset(String charset) {
         this.charset = charset;
-    }
-
-    public Boolean getNeedCookie() {
-        return needCookie;
-    }
-
-    public void setNeedCookie(Boolean needCookie) {
-        this.needCookie = needCookie;
-    }
-
-    public Boolean getNeedProxy() {
-        return needProxy;
-    }
-
-    public void setNeedProxy(Boolean needProxy) {
-        this.needProxy = needProxy;
     }
 
     public Proxy getProxy() {

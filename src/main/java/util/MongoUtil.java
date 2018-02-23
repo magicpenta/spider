@@ -4,11 +4,13 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import org.bson.BsonDocument;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -39,21 +41,30 @@ public class MongoUtil {
         }
     }
 
-    public static void insertOne(Document document) {
+    public static void insertOne(BsonDocument document) {
         MongoUtil.insertOne(DEFAULT_COLLECTION, document);
     }
 
-    public static void insertOne(String collectionName, Document document) {
-        MongoCollection<Document> mongoCollection = database.getCollection(collectionName);
+    public static void insertOne(String collectionName, BsonDocument document) {
+        MongoCollection<BsonDocument> mongoCollection = database.getCollection(collectionName, BsonDocument.class);
         mongoCollection.insertOne(document);
     }
 
-    public static Document findFirst(String fieldName, String value) {
-        return database.getCollection(DEFAULT_COLLECTION).find(Filters.eq(fieldName, value)).first();
+    public static void insertList(List<BsonDocument> documents) {
+        MongoUtil.insertList(DEFAULT_COLLECTION, documents);
     }
 
-    public static Document findFirst(String collectionName, String fieldName, String value) {
-        return database.getCollection(collectionName).find(Filters.eq(fieldName, value)).first();
+    public static void insertList(String collectionName, List<BsonDocument> documents) {
+        MongoCollection<BsonDocument> mongoCollection = database.getCollection(collectionName, BsonDocument.class);
+        mongoCollection.insertMany(documents);
+    }
+
+    public static BsonDocument findFirst(String fieldName, String value) {
+        return database.getCollection(DEFAULT_COLLECTION, BsonDocument.class).find(Filters.eq(fieldName, value)).first();
+    }
+
+    public static BsonDocument findFirst(String collectionName, String fieldName, String value) {
+        return database.getCollection(collectionName, BsonDocument.class).find(Filters.eq(fieldName, value)).first();
     }
 
 }

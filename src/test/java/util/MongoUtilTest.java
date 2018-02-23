@@ -1,5 +1,6 @@
 package util;
 
+import org.bson.BsonDocument;
 import org.bson.Document;
 import org.junit.Test;
 
@@ -13,11 +14,11 @@ public class MongoUtilTest {
 
     @Test
     public void testInsertOne() {
-        Document document = new Document("name", "panda");
+        BsonDocument document = BsonDocument.parse("{\"name\":\"panda\"}");
         MongoUtil.insertOne(document);
         document = MongoUtil.findFirst("name", "panda");
         assert document != null;
-        assert document.getString("name").equals("panda");
+        assert document.getString("name").getValue().equals("panda");
     }
 
 }

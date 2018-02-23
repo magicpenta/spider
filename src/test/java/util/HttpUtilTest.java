@@ -18,9 +18,10 @@ public class HttpUtilTest {
     @Test
     public void testExecuteGetRequest() {
         HttpParams httpParams = HttpParams.getBuilder()
-                .setUrl("http://www.baidu.com")
+                .setUrl("https://www.zhihu.com/people/0000178a1dd1e0ee50effa832c74d1f2/activities#is_task_url=1")
                 .build();
-        String responseBody = HttpUtil.executeGetRequest(httpParams);
+        HttpUtil httpUtil = new HttpUtil();
+        String responseBody = httpUtil.executeGetRequest(httpParams);
         assert responseBody != null;
         System.out.println(responseBody);
     }
@@ -38,7 +39,8 @@ public class HttpUtilTest {
                 .setHeaderMap(headerMap)
                 .build();
 
-        String responseBody = HttpUtil.executeGetRequest(httpParams);
+        HttpUtil httpUtil = new HttpUtil();
+        String responseBody = httpUtil.executeGetRequest(httpParams);
         assert responseBody != null;
         System.out.println(responseBody);
     }
@@ -57,7 +59,8 @@ public class HttpUtilTest {
                 .setProxy(proxy)
                 .build();
 
-        String responseBody = HttpUtil.executeGetRequest(httpParams);
+        HttpUtil httpUtil = new HttpUtil();
+        String responseBody = httpUtil.executeGetRequest(httpParams);
         assert responseBody != null;
         System.out.println(responseBody);
     }
@@ -75,7 +78,8 @@ public class HttpUtilTest {
                 .setFormParams(formParams)
                 .build();
 
-        String responseBody = HttpUtil.executePostRequest(httpParams);
+        HttpUtil httpUtil = new HttpUtil();
+        String responseBody = httpUtil.executePostRequest(httpParams);
         assert responseBody != null;
         System.out.println(responseBody);
     }

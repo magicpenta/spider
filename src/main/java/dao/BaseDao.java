@@ -51,4 +51,24 @@ public class BaseDao {
         }
     }
 
+    public static int insert(String statement, Object parameter) {
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = sqlSessionFactory.openSession(true);
+            return sqlSession.insert(statement, parameter);
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    public static int update(String statement, Object parameter) {
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = sqlSessionFactory.openSession(true);
+            return sqlSession.update(statement, parameter);
+        } finally {
+            sqlSession.close();
+        }
+    }
+
 }

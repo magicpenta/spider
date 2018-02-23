@@ -1,6 +1,8 @@
 package main;
 
+import dao.TaskDao;
 import entity.Task;
+import entity.enums.TaskStatusEnum;
 import factory.PluginFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +74,10 @@ public class TaskRunner extends Thread {
                 continue;
             }
         }
+
+        // 更新任务状态为已完成
+        task.setStatus(TaskStatusEnum.RUNNED.getValue());
+        TaskDao.updateStatus(task);
     }
 
     /**
