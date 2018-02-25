@@ -62,25 +62,20 @@ public class HttpUtil {
                 httpGet.setHeaders(headers);
             }
 
-            logger.info("卡死位置1");
-
             // 获取响应对象
             response = httpClient.execute(httpGet);
 
-            logger.info("卡死位置2");
-
             // 获取响应实体
             HttpEntity entity = response.getEntity();
-
-            logger.info("卡死位置3");
-
             if (entity != null) {
                 responseBody = EntityUtils.toString(entity, httpParams.getCharset());
-                EntityUtils.consume(entity);
-                logger.info("卡死位置4");
+                EntityUtils.consumeQuietly(entity);
             }
 
-            logger.info("卡死位置5");
+            int status = response.getStatusLine().getStatusCode();
+            if (status != HttpStatus.SC_OK) {
+                responseBody = null;
+            }
 
             httpGet.releaseConnection();
 
@@ -151,6 +146,12 @@ public class HttpUtil {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 responseBody = EntityUtils.toString(entity, httpParams.getCharset());
+                EntityUtils.consumeQuietly(entity);
+            }
+
+            int status = response.getStatusLine().getStatusCode();
+            if (status != HttpStatus.SC_OK) {
+                responseBody = null;
             }
 
             httpPost.releaseConnection();
@@ -181,10 +182,7 @@ public class HttpUtil {
 
     private CloseableHttpClient initHttpClient(HttpParams httpParams) {
 
-        HttpRequestRetryHandler myRequestRetryHandler = (e, i, httpContext) -> false;
-
         CloseableHttpClient httpClient = HttpClients.custom()
-                .setRetryHandler(myRequestRetryHandler)
                 .build();
 
         if (httpParams == null) {
@@ -202,7 +200,6 @@ public class HttpUtil {
                         new UsernamePasswordCredentials(userName, password));
                 httpClient = HttpClients.custom()
                         .setDefaultCredentialsProvider(credsProvider)
-                        .setRetryHandler(myRequestRetryHandler)
                         .build();
             }
         }

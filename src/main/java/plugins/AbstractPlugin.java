@@ -5,6 +5,7 @@ import filter.AndFilter;
 import filter.FileExtensionFilter;
 import filter.LinkExtractor;
 import filter.LinkFilter;
+import main.TaskRunner;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +26,6 @@ public abstract class AbstractPlugin extends Thread {
     private static final Logger logger = LoggerFactory.getLogger(AbstractPlugin.class);
 
     protected Task task;
-
-    protected List<String> urlList = new ArrayList<String>();
 
     public AbstractPlugin(Task task) {
         this.task = task;
@@ -64,11 +63,18 @@ public abstract class AbstractPlugin extends Thread {
 
         AndFilter filter = new AndFilter(new LinkFilter[]{hostFilter, fileExtensionFilter});
 
-        urlList = LinkExtractor.extractLinks(task.getUrl(), body, filter);
+        List<String> urlList = LinkExtractor.extractLinks(task.getUrl(), body, filter);
+        addUrl(urlList);
     }
 
-    public List<String> getUrlList() {
-        return urlList;
+    public void addUrl(String url) {
+        TaskRunner.addUrlQueue(url);
+        TaskRunner.addUrlPool(url);
+    }
+
+    public void addUrl(List<String> urlList) {
+        TaskRunner.addUrlPool(urlList);
+        TaskRunner.addUrlQueue(urlList);
     }
 
     public abstract void parseContent(String body);

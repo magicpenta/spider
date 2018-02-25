@@ -46,8 +46,12 @@ public class MongoUtil {
     }
 
     public static void insertOne(String collectionName, BsonDocument document) {
-        MongoCollection<BsonDocument> mongoCollection = database.getCollection(collectionName, BsonDocument.class);
-        mongoCollection.insertOne(document);
+        try {
+            MongoCollection<BsonDocument> mongoCollection = database.getCollection(collectionName, BsonDocument.class);
+            mongoCollection.insertOne(document);
+        } catch (Exception e) {
+            logger.error("插入单条数据异常:", e);
+        }
     }
 
     public static void insertList(List<BsonDocument> documents) {
@@ -55,8 +59,12 @@ public class MongoUtil {
     }
 
     public static void insertList(String collectionName, List<BsonDocument> documents) {
-        MongoCollection<BsonDocument> mongoCollection = database.getCollection(collectionName, BsonDocument.class);
-        mongoCollection.insertMany(documents);
+        try {
+            MongoCollection<BsonDocument> mongoCollection = database.getCollection(collectionName, BsonDocument.class);
+            mongoCollection.insertMany(documents);
+        } catch (Exception e) {
+            logger.error("批量插入数据异常:", e);
+        }
     }
 
     public static BsonDocument findFirst(String fieldName, String value) {

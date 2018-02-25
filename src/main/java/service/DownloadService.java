@@ -1,6 +1,5 @@
 package service;
 
-import config.Constants;
 import dao.WebConfigDao;
 import entity.HttpParams;
 import entity.Proxy;
@@ -37,11 +36,6 @@ public class DownloadService {
         return downloadService;
     }
 
-    /**
-     * 重复请求次数
-     */
-    private static final Integer COUNT = 5;
-
     private List<WebConfig> webConfigs;
 
     private HttpUtil httpUtil = new HttpUtil();
@@ -68,16 +62,8 @@ public class DownloadService {
             String domain = CommonUtil.getHost(task.getUrl());
             WebConfig webConfig = this.selectOneByDomain(domain);
 
-            for (int i = 0; i < COUNT; i++) {
-                HttpParams httpParams = this.initHttpParams(task, webConfig);
-                responseBody = httpUtil.executeGetRequest(httpParams);
-                if (StringUtils.isEmpty(responseBody)) {
-                    logger.error("请求失败，等待下一轮请求...");
-                    Thread.sleep(Constants.REQUEST_SLEEP_TIME);
-                    continue;
-                }
-                break;
-            }
+            HttpParams httpParams = this.initHttpParams(task, webConfig);
+            responseBody = httpUtil.executeGetRequest(httpParams);
         } catch (Exception e) {
             logger.error("下载服务出现异常:", e);
         }
@@ -116,6 +102,8 @@ public class DownloadService {
                 logger.error("请求头设置异常:", e);
             }
         }
+
+        headerMap.put("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
 
         HttpParams httpParams = HttpParams.getBuilder()
                 .setUrl(task.getUrl())

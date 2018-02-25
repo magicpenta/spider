@@ -26,15 +26,15 @@ public class SingleTaskRunner extends Thread {
 
         logger.info("任务进程开始执行...");
 
-//        if (args.length == 0) {
-//            logger.error("获取进程参数失败，退出进程！");
-//            System.exit(0);
-//        }
-//
-//        String json = new String(Base64.getDecoder().decode(args[0]));
-//
-//        Task task = new Gson().fromJson(json, Task.class);
-        Task task = TaskDao.selectOneById(1);
+        if (args.length == 0) {
+            logger.error("获取进程参数失败，退出进程！");
+            System.exit(0);
+        }
+
+        String json = new String(Base64.getDecoder().decode(args[0]));
+
+        Task task = new Gson().fromJson(json, Task.class);
+//        Task task = TaskDao.selectOneById(1);
 
         Properties prop = new Properties();
         try {

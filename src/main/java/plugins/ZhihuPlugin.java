@@ -1,6 +1,7 @@
 package plugins;
 
 import entity.Task;
+import main.TaskRunner;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.BsonArray;
 import org.bson.BsonDocument;
@@ -35,6 +36,10 @@ public class ZhihuPlugin extends AbstractPlugin {
     public void parseContent(String body) {
         logger.info("开始解析数据...");
         try {
+            if (StringUtils.isEmpty(body)) {
+                return;
+            }
+
             BsonDocument document;
             String nextPageUrl;
 
@@ -67,6 +72,7 @@ public class ZhihuPlugin extends AbstractPlugin {
                             .getValue();
                 } catch (Exception e) {
                     nextPageUrl = null;
+                    TaskRunner.setStop(true);
                     logger.error("不存在下一页, 停止翻页!");
                 }
 
@@ -82,7 +88,7 @@ public class ZhihuPlugin extends AbstractPlugin {
             }
 
             if (StringUtils.isNotEmpty(nextPageUrl)) {
-                urlList.add(nextPageUrl);
+                addUrl(nextPageUrl);
             }
         } catch (Exception e) {
             logger.error("解析异常:", e);
