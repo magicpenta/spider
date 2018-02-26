@@ -50,6 +50,7 @@ public class PluginFactory {
     private void scanPackage(String packageName) {
         try {
             String path = getSrcPath() + File.separator + changePackageNameToPath(packageName);
+            logger.info(path);
             File dir = new File(path);
             File[] files = dir.listFiles();
 
@@ -77,10 +78,10 @@ public class PluginFactory {
      * @return
      */
     private String getSrcPath() {
-        return System.getProperty("user.dir") +
-                File.separator + "src" +
-                File.separator + "main" +
-                File.separator + "java";
+        return System.getProperty("user.dir");
+//                + File.separator + "src"
+//                + File.separator + "main"
+//                + File.separator + "java";
     }
 
     /**

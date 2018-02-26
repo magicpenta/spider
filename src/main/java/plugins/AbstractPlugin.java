@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import service.DownloadService;
 import util.CommonUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +33,7 @@ public abstract class AbstractPlugin extends Thread {
     @Override
     public void run() {
         logger.info("{} 开始运行...", task.getUrl());
-        String body = DownloadService.getInstance().getResponseBody(task);
+        String body = new DownloadService().getResponseBody(task);
         if (StringUtils.isNotEmpty(body)) {
             if (isDetailPage(task.getUrl())) {
                 logger.info("开始解析详情页...");

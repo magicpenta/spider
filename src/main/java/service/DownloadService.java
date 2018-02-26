@@ -26,17 +26,11 @@ public class DownloadService {
 
     private static final Logger logger = LoggerFactory.getLogger(DownloadService.class);
 
-    private static final DownloadService downloadService = new DownloadService();
+    private static List<WebConfig> webConfigs;
 
-    private DownloadService() {
+    static {
         webConfigs = WebConfigDao.selectList();
     }
-
-    public static DownloadService getInstance() {
-        return downloadService;
-    }
-
-    private List<WebConfig> webConfigs;
 
     private HttpUtil httpUtil = new HttpUtil();
 
@@ -63,6 +57,8 @@ public class DownloadService {
             WebConfig webConfig = this.selectOneByDomain(domain);
 
             HttpParams httpParams = this.initHttpParams(task, webConfig);
+
+            logger.info("准备开始下载源码...");
             responseBody = httpUtil.executeGetRequest(httpParams);
         } catch (Exception e) {
             logger.error("下载服务出现异常:", e);

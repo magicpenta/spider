@@ -16,25 +16,14 @@ public class ActivemqService {
 
     private static final Logger logger = LoggerFactory.getLogger(ActivemqService.class);
 
-    private volatile static ActivemqService service;
-
     private Connection connection;
 
     private Session session;
 
-    private ActivemqService() {
-        initConnection();
-    }
+    private MessageConsumer consumer;
 
-    public static ActivemqService getInstance() {
-        if (service == null) {
-            synchronized (ActivemqService.class) {
-                if (service == null) {
-                    service = new ActivemqService();
-                }
-            }
-        }
-        return service;
+    public ActivemqService() {
+        initConnection();
     }
 
     private void initConnection() {
@@ -62,12 +51,18 @@ public class ActivemqService {
         }
     }
 
-    public String getMessage(String destinationName) {
-        String messageText = null;
+    public void createConsumer(String destinationName) {
         try {
             Destination destination = session.createQueue(destinationName);
-            MessageConsumer consumer = session.createConsumer(destination);
+            consumer = session.createConsumer(destination);
+        } catch (Exception e) {
+            logger.error("创建消费者异常:", e);
+        }
+    }
 
+    public String getMessage() {
+        String messageText = null;
+        try {
             Message message = consumer.receive();
             if (message instanceof TextMessage) {
                 messageText = ((TextMessage) message).getText();

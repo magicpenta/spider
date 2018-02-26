@@ -17,7 +17,7 @@ public class DownloadServiceTest {
         task.setId(1);
         task.setUrl("https://www.baidu.com");
         task.setStatus(0);
-        String responseBody = DownloadService.getInstance().getResponseBody(task);
+        String responseBody = new DownloadService().getResponseBody(task);
         assert responseBody != null;
     }
 }

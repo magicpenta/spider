@@ -12,10 +12,11 @@ public class ActivemqServiceTest {
 
     @Test
     public void testActivemqService() {
-        ActivemqService service = ActivemqService.getInstance();
+        ActivemqService service = new ActivemqService();
         String s1 = "test";
         service.sendMessage("test", s1);
-        String s2 = service.getMessage("test");
+        service.createConsumer("test");
+        String s2 = service.getMessage();
         service.close();
 
         assert s1.equals(s2);

@@ -43,7 +43,7 @@ public class ZhihuPlugin extends AbstractPlugin {
             BsonDocument document;
             String nextPageUrl;
 
-            if (isTaskUrl(task.getUrl())) {
+            if (isFirstPage(task.getUrl())) {
                 Element element = Jsoup.parse(body).getElementById("data");
                 body = element.attr("data-state");
                 body = body.replaceAll("&quot;", "\"");
@@ -51,19 +51,7 @@ public class ZhihuPlugin extends AbstractPlugin {
                 String userKey = document.getDocument("entities")
                         .getDocument("users")
                         .getFirstKey();
-                nextPageUrl = task.getUrl().replaceAll("/people.*",
-                        "/people/" + userKey + "/activities");
-            } else if (isFirstPage(task.getUrl())) {
-                String userId = CommonUtil.match(task.getUrl(), "/people/(.*?)/")[1];
-                Element element = Jsoup.parse(body).getElementById("data");
-                body = element.attr("data-state");
-                body = body.replaceAll("&quot;", "\"");
-                document = BsonDocument.parse(body);
-                nextPageUrl = document.getDocument("people")
-                        .getDocument("activitiesByUser")
-                        .getDocument(userId)
-                        .getString("next")
-                        .getValue();
+                nextPageUrl = "https://www.zhihu.com/api/v4/members/" + userKey + "/activities?limit=8";
             } else {
                 document = BsonDocument.parse(body);
                 try {
@@ -77,14 +65,16 @@ public class ZhihuPlugin extends AbstractPlugin {
                 }
 
                 BsonArray bsonArray = document.getArray("data");
-
-                logger.info("共找到[{}]条记录", bsonArray.size());
-
-                List<BsonDocument> documents = new ArrayList<BsonDocument>();
-                for (int i = 0; i < bsonArray.size(); i++) {
-                    documents.add(bsonArray.get(i).asDocument());
+                if (bsonArray != null) {
+                    if (bsonArray.size() > 0){
+                        logger.info("共找到[{}]条记录", bsonArray.size());
+                        List<BsonDocument> documents = new ArrayList<BsonDocument>();
+                        for (int i = 0; i < bsonArray.size(); i++) {
+                            documents.add(bsonArray.get(i).asDocument());
+                        }
+                        MongoUtil.insertList(documents);
+                    }
                 }
-                MongoUtil.insertList(documents);
             }
 
             if (StringUtils.isNotEmpty(nextPageUrl)) {
@@ -101,18 +91,11 @@ public class ZhihuPlugin extends AbstractPlugin {
         return true;
     }
 
-    private boolean isTaskUrl(String url) {
-        if (StringUtils.isEmpty(url)) {
-            return false;
-        }
-        return url.contains(TASK_URL_MASK);
-    }
-
     private boolean isFirstPage(String url) {
         if (StringUtils.isEmpty(url)) {
             return false;
         }
-        return !url.contains("api") && !url.contains(TASK_URL_MASK);
+        return !url.contains("api");
     }
 
 }

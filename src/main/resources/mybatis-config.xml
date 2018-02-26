@@ -8,9 +8,9 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/spider?useUnicode=true&amp;characterEncoding=UTF-8"/>
+                <property name="url" value="jdbc:mysql://120.79.18.83:3306/spider?useUnicode=true&amp;characterEncoding=UTF-8"/>
                 <property name="username" value="root"/>
-                <property name="password" value="362400"/>
+                <property name="password" value="FXzmCSzs666!"/>
             </dataSource>
         </environment>
     </environments>

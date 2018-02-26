@@ -22,7 +22,7 @@ public class ProxyApi {
 
     public static void requestProxyList() {
 
-        String responseBody = DownloadService.getInstance().getResponseBody(Constants.PROXY_URL);
+        String responseBody = new DownloadService().getResponseBody(Constants.PROXY_URL);
 
         if (StringUtils.isEmpty(responseBody)) {
             logger.error("请求代理api失败！");

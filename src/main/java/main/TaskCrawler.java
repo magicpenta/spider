@@ -36,21 +36,21 @@ public class TaskCrawler {
     public static void main(String[] args) {
         logger.info("开始加载任务...");
 
-        ActivemqService service = ActivemqService.getInstance();
-        ActiveJmxService jmxService = ActiveJmxService.getInstance();
         String queueName = Constants.TASK_QUEUE_NAME;
+        ActivemqService service = new ActivemqService();
+        ActiveJmxService jmxService = ActiveJmxService.getInstance();
 
         while (true) {
 
+            List<Task> taskList = TaskDao.selectListByStatus(TaskStatusEnum.NOT_RUNNING.getValue());
+
+            if (taskList == null || taskList.size() == 0) {
+                logger.info("所有任务已加载完毕, 退出程序");
+                break;
+            }
+
             Long queueSize = jmxService.getQueueSize(queueName);
             if (queueSize == null || queueSize < QUEUE_MAX_NUM) {
-
-                List<Task> taskList = TaskDao.selectListByStatus(TaskStatusEnum.NOT_RUNNING.getValue());
-
-                if (taskList == null || taskList.size() == 0) {
-                    logger.info("所有任务已加载完毕, 退出程序");
-                    break;
-                }
 
                 logger.info("成功加载{}个任务...", taskList.size());
 

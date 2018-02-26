@@ -31,7 +31,7 @@ public class RuntimeThread extends Thread {
         try {
             line = bf.readLine();
             while (line != null) {
-                logger.info(line);
+//                logger.info(line);
                 line = bf.readLine();
             }
         } catch (IOException e) {
