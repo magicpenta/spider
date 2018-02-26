@@ -1,5 +1,6 @@
 package service;
 
+import config.Constants;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class ActivemqService {
     }
 
     private void initConnection() {
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(Constants.AMQ_URL);
         try {
             connection = connectionFactory.createConnection();
             connection.start();

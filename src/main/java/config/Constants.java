@@ -42,13 +42,12 @@ public class Constants {
     /**
      * mq 相关常量
      */
+    public static final String AMQ_URL = prop.getProperty("amq_url", "failover:(tcp://localhost:61616)");
     public static final String JMX_URL = prop.getProperty("jmx_url", "service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi");
     public static final String BROKER_NAME = prop.getProperty("broker_name", "my_broker:brokerName=localhost,type=Broker");
     public static final String TASK_QUEUE_NAME = prop.getProperty("task_queue_name", "MQ_TASK");
-    public static final Long QUEUE_MAX_NUM = Long.valueOf(prop.getProperty("queue_max_num", "1000"));
+    public static final Long QUEUE_MAX_NUM = Long.valueOf(prop.getProperty("queue_max_num", "100"));
 
-    public static final Integer MAX_PROCESS = Integer.valueOf(prop.getProperty("max_process", "20"));
-
-
+    public static final Integer MAX_PROCESS = Integer.valueOf(prop.getProperty("max_process", "10"));
 
 }
