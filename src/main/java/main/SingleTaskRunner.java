@@ -34,7 +34,7 @@ public class SingleTaskRunner extends Thread {
         String json = new String(Base64.getDecoder().decode(args[0]));
 
         Task task = new Gson().fromJson(json, Task.class);
-//        Task task = TaskDao.selectOneById(28);
+//        Task task = TaskDao.selectOneById(1);
 
         Properties prop = new Properties();
         try {

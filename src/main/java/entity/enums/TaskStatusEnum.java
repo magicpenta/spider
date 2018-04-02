@@ -10,7 +10,8 @@ public enum TaskStatusEnum {
 
     NOT_RUNNING(0),
     RUNNING(1),
-    RUNNED(2);
+    RUNNED(2),
+    ERROR(3);
 
     private int value;
 

@@ -13,6 +13,7 @@ import util.CommonUtil;
 import util.MongoUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,8 +27,6 @@ public class ZhihuPlugin extends AbstractPlugin {
 
     private static final Logger logger = LoggerFactory.getLogger(ZhihuPlugin.class);
 
-    private static final String TASK_URL_MASK = "#is_task_url=1";
-
     public ZhihuPlugin(Task task) {
         super(task);
     }
@@ -36,9 +35,6 @@ public class ZhihuPlugin extends AbstractPlugin {
     public void parseContent(String body) {
         logger.info("开始解析数据...");
         try {
-            if (StringUtils.isEmpty(body)) {
-                return;
-            }
 
             BsonDocument document;
             String nextPageUrl;
@@ -73,6 +69,17 @@ public class ZhihuPlugin extends AbstractPlugin {
                             documents.add(bsonArray.get(i).asDocument());
                         }
                         MongoUtil.insertList(documents);
+
+                        Date lastDate = new Date(
+                                Long.valueOf(bsonArray.get(bsonArray.size() - 1).asDocument().getInt32("created_time").getValue() + "000"));
+                        // 2016/01/01 00:00:00
+                        Date beginDate = new Date(1451577600);
+                        logger.info("本次记录最早更新时间:{}", lastDate);
+                        if (lastDate.before(beginDate)) {
+                            logger.info("本次记录最早更新时间 {} 早于 live 创建时间 {} , 停止翻页", lastDate, beginDate);
+                            nextPageUrl = null;
+                            TaskRunner.setStop(true);
+                        }
                     }
                 }
             }
@@ -82,6 +89,7 @@ public class ZhihuPlugin extends AbstractPlugin {
             }
         } catch (Exception e) {
             logger.error("解析异常:", e);
+            TaskRunner.setError(true);
         }
         logger.info("解析任务完成...");
     }

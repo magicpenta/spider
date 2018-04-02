@@ -1,7 +1,5 @@
 package entity;
 
-import org.apache.http.client.config.RequestConfig;
-
 import java.util.Map;
 
 /**
@@ -18,8 +16,6 @@ public class HttpParams {
 
     private Proxy proxy;
 
-    private RequestConfig requestConfig;
-
     private Map<String, String> headerMap;
 
     private Map<String, String> formParams;
@@ -29,11 +25,10 @@ public class HttpParams {
     }
 
     private HttpParams(String url, String charset, Boolean needCookie, Boolean needProxy, Proxy proxy,
-                      RequestConfig requestConfig, Map<String, String> headerMap, Map<String, String> formParams) {
+                       Map<String, String> headerMap, Map<String, String> formParams) {
         this.url = url;
         this.charset = charset;
         this.proxy = proxy;
-        this.requestConfig = requestConfig;
         this.headerMap = headerMap;
         this.formParams = formParams;
     }
@@ -60,14 +55,6 @@ public class HttpParams {
 
     public void setProxy(Proxy proxy) {
         this.proxy = proxy;
-    }
-
-    public RequestConfig getRequestConfig() {
-        return requestConfig;
-    }
-
-    public void setRequestConfig(RequestConfig requestConfig) {
-        this.requestConfig = requestConfig;
     }
 
     public Map<String, String> getHeaderMap() {
@@ -98,14 +85,12 @@ public class HttpParams {
 
         private Proxy proxy;
 
-        private RequestConfig requestConfig;
-
         private Map<String, String> headerMap;
 
         private Map<String, String> formParams;
 
         public HttpParams build() {
-            return new HttpParams(url, charset, needCookie, needProxy, proxy, requestConfig, headerMap, formParams);
+            return new HttpParams(url, charset, needCookie, needProxy, proxy, headerMap, formParams);
         }
 
         public HttpParamsBuilder setUrl(String url) {
@@ -130,11 +115,6 @@ public class HttpParams {
 
         public HttpParamsBuilder setProxy(Proxy proxy) {
             this.proxy = proxy;
-            return this;
-        }
-
-        public HttpParamsBuilder setRequestConfig(RequestConfig requestConfig) {
-            this.requestConfig = requestConfig;
             return this;
         }
 

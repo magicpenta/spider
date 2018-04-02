@@ -6,3 +6,4 @@ nohup java -cp .:./lib/* main.MultipleTaskRunner 2>././log/log.txt &
 echo 'started!'
 else echo 'TaskRunner is runnings';
 fi
+

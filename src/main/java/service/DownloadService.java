@@ -84,18 +84,21 @@ public class DownloadService {
             proxy = ProxyFactory.getInstance().getProxy();
         }
 
-        String[] requestHeaders = webConfig.getRequestHeaders().split(";");
         Map<String, String> headerMap = new HashMap<String, String>(16);
 
-        if (requestHeaders != null) {
-            try {
-                for (String requestHeader : requestHeaders) {
-                    String requestParam = requestHeader.split(":")[0];
-                    String requestValue = requestHeader.split(":")[1];
-                    headerMap.put(requestParam, requestValue);
+        String requestHeaderStr = webConfig.getRequestHeaders();
+        if (StringUtils.isNotEmpty(requestHeaderStr)) {
+            String[] requestHeaders = requestHeaderStr.split(";");
+            if (requestHeaders != null) {
+                try {
+                    for (String requestHeader : requestHeaders) {
+                        String requestParam = requestHeader.split(":")[0];
+                        String requestValue = requestHeader.split(":")[1];
+                        headerMap.put(requestParam, requestValue);
+                    }
+                } catch (Exception e) {
+                    logger.error("请求头设置异常:", e);
                 }
-            } catch (Exception e) {
-                logger.error("请求头设置异常:", e);
             }
         }
 

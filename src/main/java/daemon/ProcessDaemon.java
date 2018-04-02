@@ -21,7 +21,7 @@ public class ProcessDaemon extends Thread {
     /**
      * 休眠时间，默认1分钟
      */
-    private static final Integer SLEEP_TIME = 60000;
+    private static final Integer SLEEP_TIME = 30000;
 
     private Task task;
 
@@ -38,7 +38,7 @@ public class ProcessDaemon extends Thread {
             logger.info("任务{}当前状态为{}...", task.getId(), task.getStatus());
 
             // 定时检查任务状态，如果任务已执行完毕，则进程数减1
-            if (TaskStatusEnum.RUNNED.getValue() == task.getStatus()) {
+            if (TaskStatusEnum.RUNNED.getValue() == task.getStatus() || task.getStatus() == 3) {
                 logger.info("检查到任务{}已执行完毕，准备退出线程...", task.getId());
                 break;
             }

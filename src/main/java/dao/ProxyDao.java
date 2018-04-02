@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class ProxyDao {
 
-    public static Proxy findFirst() {
-        return BaseDao.selectOne("dao.ProxyMapper.findFirst", null);
+    public static Proxy findOne() {
+        return BaseDao.selectOne("dao.ProxyMapper.findOne", null);
     }
 
     public static int insertList(List<Proxy> proxyList) {

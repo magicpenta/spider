@@ -26,14 +26,21 @@ public abstract class AbstractPlugin extends Thread {
 
     protected Task task;
 
+    private static DownloadService downloadService;
+
     public AbstractPlugin(Task task) {
         this.task = task;
+        if (downloadService == null) {
+            synchronized (AbstractPlugin.class) {
+                downloadService = new DownloadService();
+            }
+        }
     }
 
     @Override
     public void run() {
         logger.info("{} 开始运行...", task.getUrl());
-        String body = new DownloadService().getResponseBody(task);
+        String body = downloadService.getResponseBody(task);
         if (StringUtils.isNotEmpty(body)) {
             if (isDetailPage(task.getUrl())) {
                 logger.info("开始解析详情页...");
@@ -42,6 +49,9 @@ public abstract class AbstractPlugin extends Thread {
                 logger.info("开始解析列表页...");
                 extractPageLinks(body);
             }
+        } else {
+            logger.info("任务链接有误或插件异常, 获取源码为空...");
+            TaskRunner.setError(true);
         }
     }
 

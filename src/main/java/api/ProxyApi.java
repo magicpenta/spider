@@ -32,6 +32,7 @@ public class ProxyApi {
         try {
             List<Proxy> proxyList = new ArrayList<Proxy>();
             String[] proxyArray = responseBody.split("\n");
+//            String[] proxyArray = responseBody.split("\r\n");
 
             // 对比代理限制数与请求到的代理数，取最小值
             int count = Constants.PROXY_QUANTITY >= proxyArray.length ? proxyArray.length : Constants.PROXY_QUANTITY;

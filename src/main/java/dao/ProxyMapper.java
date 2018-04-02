@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface ProxyMapper {
 
-    Proxy findFirst();
+    Proxy findOne();
 
     int insertList(List<Proxy> proxyList);
 

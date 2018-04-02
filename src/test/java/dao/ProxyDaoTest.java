@@ -16,7 +16,7 @@ public class ProxyDaoTest {
 
     @Test
     public void testFindFirst() {
-        Proxy proxy = ProxyDao.findFirst();
+        Proxy proxy = ProxyDao.findOne();
         assert proxy != null;
     }
 

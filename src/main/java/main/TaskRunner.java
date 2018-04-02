@@ -38,6 +38,11 @@ public class TaskRunner extends Thread {
      */
     private static boolean isStop = false;
 
+    /**
+     * 异常标记
+     */
+    private static boolean isError = false;
+
     public TaskRunner(Task task) {
         this.task = task;
     }
@@ -45,6 +50,7 @@ public class TaskRunner extends Thread {
     @Override
     public void run() {
         logger.info("任务线程开始执行...");
+        long beginTimeStamp = System.currentTimeMillis();
 
         // 初始化 URL 队列
         addUrlQueue(task.getUrl());
@@ -52,45 +58,41 @@ public class TaskRunner extends Thread {
 
         // 循环调度
         String taskUrl;
-        String tempUrl = null;
-        int count = 0;
-        int rebootCount = 0;
-        AbstractPlugin plugin = null;
+
         while (true) {
             try {
-                if (rebootCount > 5 || isStop) {
-                    logger.info("长时间未获取到 URL 或已达重启上限, 准备退出进程...");
-                    if (plugin != null) {
-                        plugin.stop();
-                    }
+                if (isStop) {
+                    logger.info("任务执行完毕, 准备退出进程...");
+                    Thread.sleep(5 * 1000);
+                    task.setStatus(TaskStatusEnum.RUNNED.getValue());
+                    break;
+                }
+
+                long timeMill = System.currentTimeMillis() - beginTimeStamp;
+//                logger.info("当前运行时间:" + timeMill);
+                if (timeMill > 3600000) {
+                    logger.info("进程运行超过 1 小时, 强制退出进程!");
+                    task.setStatus(TaskStatusEnum.ERROR.getValue());
+                    break;
+                }
+
+                if (isError) {
+                    logger.info("任务执行异常, 强制退出进程!");
+                    task.setStatus(TaskStatusEnum.ERROR.getValue());
                     break;
                 }
 
                 taskUrl = urlQueue.poll();
+
                 if (taskUrl == null) {
-                    count++;
-                    if (count >= 30) {
-                        logger.info("长时间未获取到 URL, 准备重启线程...");
-                        count = 0;
-                        rebootCount++;
-                        logger.info("第{}次重启线程...", rebootCount);
-                        if (plugin != null) {
-                            addUrlQueue(tempUrl);
-                            plugin.stop();
-                        }
-                    }
-                    // logger.info("第{}次URL队列为空, 等待 1 秒...", count);
                     Thread.sleep(1000);
                     continue;
                 }
 
-                count = 0;
-
                 logger.info("当前任务URL：" + taskUrl);
 
-                tempUrl = taskUrl;
                 task.setUrl(taskUrl);
-                plugin = PluginFactory.getInstance().getPlugin(task);
+                AbstractPlugin plugin = PluginFactory.getInstance().getPlugin(task);
                 plugin.start();
 
             } catch (Exception e) {
@@ -99,8 +101,7 @@ public class TaskRunner extends Thread {
             }
         }
 
-        // 更新任务状态为已完成
-        task.setStatus(TaskStatusEnum.RUNNED.getValue());
+        // 更新任务状态
         TaskDao.updateStatus(task);
         System.exit(0);
     }
@@ -111,9 +112,9 @@ public class TaskRunner extends Thread {
      * @param url
      */
     public static void addUrlQueue(String url) {
-//        if (!isUrlExist(url)) {
+        if (!isUrlExist(url)) {
             urlQueue.add(url);
-//        }
+        }
     }
 
     /**
@@ -175,4 +176,7 @@ public class TaskRunner extends Thread {
         TaskRunner.isStop = isStop;
     }
 
+    public static void setError(boolean isError) {
+        TaskRunner.isError = isError;
+    }
 }

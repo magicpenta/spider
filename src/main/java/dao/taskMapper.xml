@@ -8,7 +8,7 @@
     </select>
 
     <select id="selectListByStatus" parameterType="int" resultMap="BaseResultMap">
-        select * from task where status = #{status} order by id asc limit 100
+        select <include refid="Base_Column_List"/> from task where status = #{status} and available = 1 order by id asc limit 300
     </select>
 
     <insert id="insertList" parameterType="java.util.List">

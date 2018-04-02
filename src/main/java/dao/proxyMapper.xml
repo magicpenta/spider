@@ -3,8 +3,8 @@
 
 <mapper namespace="dao.ProxyMapper">
 
-    <select id="findFirst" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/> from proxy limit 1
+    <select id="findOne" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from proxy order by rand() limit 1
     </select>
 
     <insert id="insertList" parameterType="java.util.List">

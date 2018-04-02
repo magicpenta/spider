@@ -18,7 +18,7 @@ public class HttpUtilTest {
     @Test
     public void testExecuteGetRequest() {
         HttpParams httpParams = HttpParams.getBuilder()
-                .setUrl("https://www.zhihu.com/people/0000178a1dd1e0ee50effa832c74d1f2/activities#is_task_url=1")
+                .setUrl("https://www.baidu.com/")
                 .build();
         HttpUtil httpUtil = new HttpUtil();
         String responseBody = httpUtil.executeGetRequest(httpParams);
@@ -61,25 +61,6 @@ public class HttpUtilTest {
 
         HttpUtil httpUtil = new HttpUtil();
         String responseBody = httpUtil.executeGetRequest(httpParams);
-        assert responseBody != null;
-        System.out.println(responseBody);
-    }
-
-    @Test
-    public void testExecutePostRequest() {
-        Map<String, String> formParams = new HashMap<String, String>();
-        formParams.put("Db", "introduction");
-        formParams.put("valuepath", "0%7C1");
-        formParams.put("find_count", "0");
-        formParams.put("kwd", "test");
-
-        HttpParams httpParams = HttpParams.getBuilder()
-                .setUrl("http://www.pkulaw.cn/doCluster.ashx")
-                .setFormParams(formParams)
-                .build();
-
-        HttpUtil httpUtil = new HttpUtil();
-        String responseBody = httpUtil.executePostRequest(httpParams);
         assert responseBody != null;
         System.out.println(responseBody);
     }

@@ -24,7 +24,7 @@ public class TaskDaemon extends Thread {
 
         while (true) {
 
-            Proxy proxy = ProxyDao.findFirst();
+            Proxy proxy = ProxyDao.findOne();
             ProxyFactory.getInstance().setProxy(proxy);
 
             if (proxy != null) {
