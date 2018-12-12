@@ -3,21 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <properties resource="database.properties"></properties>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/spider?useUnicode=true&amp;characterEncoding=UTF-8"/>
-                <property name="username" value="root"/>
-                <property name="password" value="362400"/>
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper resource="dao/webConfigMapper.xml"/>
-        <mapper resource="dao/taskMapper.xml"/>
-        <mapper resource="dao/proxyMapper.xml"/>
-        <mapper resource="dao/userIdMapper.xml"/>
+        <mapper resource="com/panda/dao/common/mapper/proxyMapper.xml"/>
+        <mapper class="com.panda.dao.common.mapper.TaskMapper"/>
+        <mapper class="com.panda.dao.common.mapper.RequestConfigMapper"/>
+        <mapper class="com.panda.dao.taobao.mapper.TaobaoSellerMapper"/>
+        <mapper class="com.panda.dao.taobao.mapper.TaobaoCommentMapper"/>
+        <mapper class="com.panda.dao.taobao.mapper.TaobaoAppendMapper"/>
     </mappers>
 </configuration>

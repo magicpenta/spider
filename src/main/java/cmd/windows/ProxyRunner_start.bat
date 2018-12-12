@@ -1,2 +1,2 @@
-java -classpath .;./lib/* main.ProxyRunner
+java -classpath .;./lib/* com.panda.main.ProxyRunner
 pause

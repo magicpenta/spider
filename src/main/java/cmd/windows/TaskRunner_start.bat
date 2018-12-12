@@ -1,2 +1,2 @@
-java -classpath .;./lib/* main.MultipleTaskRunner
+java -classpath .;./lib/* com.panda.main.MultipleTaskRunner
 pause

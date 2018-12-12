@@ -1,2 +1,2 @@
-java -classpath .;./lib/* main.TaskCrawler
+java -classpath .;./lib/* com.panda.main.TaskCrawler
 pause
